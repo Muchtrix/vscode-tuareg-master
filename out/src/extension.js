@@ -35,7 +35,7 @@ class TuaregListener {
 class Tuareg {
     constructor() {
         this.barLabel = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
-        this.barLabel.text = '$(terminal) (Tuareg-master)';
+        this.barLabel.text = '$(terminal) Tuareg-master';
         this.barLabel.command = 'tuareg.toggleOcaml';
         this.barLabel.tooltip = 'Show OCaml interactive';
         this.barLabel.show();

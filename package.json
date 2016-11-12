@@ -2,11 +2,15 @@
     "name": "ocaml-tuareg-master",
     "displayName": "Ocaml tuareg-master",
     "description": "A quick extension to send single OCaml statement (ended with ;;) to opened console",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "muchtrix",
     "author": {
         "name": "Wiktor Adamski",
         "url": "https://github.com/Muchtrix"
+    },
+    "repository": {
+        "type": "",
+        "url": "https://github.com/Muchtrix/vscode-tuareg-master"
     },
     "icon": "images/icon.png",
     "engines": {
