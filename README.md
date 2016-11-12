@@ -9,7 +9,9 @@
 
 ![usage](images/main.gif)
 
-Tuareg-master interactive mode for OCaml. Zdzisław Spławski style ;)
+Emulation of Emacs Tuareg extension's interactive mode for Visual Studio Code.
+
+## Shortcuts
 
 Plug-in adds following shortcuts by default:
 * **ctrl+k ctrl+o** - open OCaml in integrated terminal
