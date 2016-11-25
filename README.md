@@ -1,4 +1,4 @@
-# Ocaml tuareg-master README
+# Tuareg-master 
 
 ## Prequisites
 
@@ -22,14 +22,14 @@ Plug-in adds following shortcuts by default:
 
 ## Known Issues
 
-Currently extension does not correctly recognize multiple statements ending on the same line, for example:
-```ocaml
-filter (fun x -> x mod 2 = 0) [1;2;3;4;5;6;7];;filter (fun x -> x mod 2 = 0) [];;
-````
-
-The extension doesn't respect comments either, it will send commented-out code.
+The extension doesn't respect comments, it will send commented-out code.
 
 ## Release Notes
+
+### 1.0.2
+
+Changed the way statements are selected, fixed bug ocurring when user forgot
+to end final statement in file with ";;", added experimental indent-formatter.
 
 ### 1.0.1
 
@@ -38,7 +38,3 @@ Fixed broken image in README
 ### 1.0.0
 
 Initial release of tuareg-master
-
--------------------------------------------------------------
-
-**Enjoy!**

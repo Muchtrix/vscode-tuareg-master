@@ -1,15 +1,14 @@
 {
     "name": "ocaml-tuareg-master",
     "displayName": "Ocaml tuareg-master",
-    "description": "A quick extension to send single OCaml statement (ended with ;;) to opened console",
-    "version": "1.0.1",
+    "description": "A quick extension to send single OCaml statement (finished with ;;) to opened console",
+    "version": "1.0.2",
     "publisher": "muchtrix",
     "author": {
         "name": "Wiktor Adamski",
         "url": "https://github.com/Muchtrix"
     },
     "repository": {
-        "type": "",
         "url": "https://github.com/Muchtrix/vscode-tuareg-master"
     },
     "icon": "images/icon.png",
@@ -24,13 +23,27 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
+        "configuration": {
+            "title": "Tuareg-master settings",
+            "properties": {
+                "tuareg.indentLength": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "Defines how many spaces one indent level equals to."
+                }
+            }
+        },
         "commands": [{
             "command": "tuareg.sendLine",
             "title": "Tuareg: Send statement to terminal"
         },
         {
-            "command": "tuareg.toggleOcaml",
+            "command": "tuareg.toggleTerminal",
             "title": "Tuareg: Toggle OCaml in integrated console"
+        },
+        {
+            "command": "tuareg.indentSelection",
+            "title": "Tuareg: Indent selection"
         }],
         "keybindings": [
             {
@@ -38,7 +51,7 @@
                 "key": "ctrl+alt+/"
             },
             {
-                "command": "tuareg.toggleOcaml",
+                "command": "tuareg.toggleTerminal",
                 "key": "ctrl+k ctrl+o"
             }
         ]
