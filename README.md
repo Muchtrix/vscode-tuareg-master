@@ -18,7 +18,7 @@ Cursor then moves to beginning of the next one.
 
 Plug-in adds following shortcuts by default:
 * **ctrl+k ctrl+o** - open OCaml in integrated terminal
-* **right alt+/** - send statement the cursor is on to ocaml
+* **right alt+/** (**Ctrl+alt+/** on mac) - send statement the cursor is on to ocaml
 
 ## Known Issues
 
