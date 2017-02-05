@@ -16,19 +16,22 @@ class TuaregListener {
         this.tuar = t;
         let commands = [];
         commands[0] = vscode.commands.registerCommand('tuareg.sendLine', () => {
-            this.tuar.sendStatement();
+            this.tuar.sendStatement(false);
         });
-        commands[1] = vscode.commands.registerCommand('tuareg.toggleTerminal', () => {
+        commands[1] = vscode.commands.registerCommand('tuareg.sendPreviousLine', () => {
+            this.tuar.sendStatement(true);
+        });
+        commands[2] = vscode.commands.registerCommand('tuareg.toggleTerminal', () => {
             this.tuar.toggleTerminal();
         });
-        commands[2] = vscode.commands.registerTextEditorCommand('tuareg.indentSelection', (editor) => {
+        commands[3] = vscode.commands.registerTextEditorCommand('tuareg.indentSelection', (editor) => {
             this.tuar.indentSelection(editor, editor.selection);
         });
         let subscriptions = [];
-        vscode.window.onDidChangeActiveTextEditor(this.onEvent, this, subscriptions);
+        vscode.window.onDidChangeActiveTextEditor(this.onFileChange, this, subscriptions);
         this.disposables = vscode.Disposable.from(...commands, ...subscriptions);
     }
-    onEvent() {
+    onFileChange() {
         this.tuar.updateLabel();
     }
     dispose() {
@@ -55,7 +58,7 @@ class Tuareg {
             this.terminal.show(false);
         this.terminalVis = !this.terminalVis;
     }
-    getCurrentStatement() {
+    getStatement(previousStatement = false) {
         let editor = vscode.window.activeTextEditor;
         let doc = editor.document;
         let cursorOffs = doc.offsetAt(editor.selection.active);
@@ -63,22 +66,43 @@ class Tuareg {
         let currInd = -1;
         let tokens = doc.getText().split(";;");
         for (var index = 0; index <= tokens.length; ++index) {
-            if (currOffs <= cursorOffs && cursorOffs <= currOffs + tokens[index].length + 1) {
+            if (previousStatement) {
+                if (currOffs <= cursorOffs && cursorOffs <= currOffs + tokens[index].length + 1) {
+                    if (index == 0) {
+                        return new vscode.Selection(doc.positionAt(tokens[0].length + 2), doc.positionAt(0));
+                    }
+                    currOffs -= tokens[index - 1].length + 2;
+                    break;
+                }
                 currInd = index;
-                break;
+                currOffs += tokens[index].length + 2;
             }
-            currOffs += tokens[index].length + 2;
+            else {
+                if (currOffs <= cursorOffs && cursorOffs <= currOffs + tokens[index].length + 1) {
+                    currInd = index;
+                    break;
+                }
+                currOffs += tokens[index].length + 2;
+            }
         }
-        return new vscode.Selection(doc.positionAt(currOffs), doc.positionAt(currOffs + tokens[currInd].length + 2));
+        if (previousStatement) {
+            return new vscode.Selection(doc.positionAt(currOffs + tokens[currInd].length + 2), doc.positionAt(currOffs));
+        }
+        else {
+            return new vscode.Selection(doc.positionAt(currOffs), doc.positionAt(currOffs + tokens[currInd].length + 2));
+        }
     }
-    sendStatement() {
+    sendStatement(prev = false) {
         let editor = vscode.window.activeTextEditor;
         let doc = editor.document;
-        editor.selection = this.getCurrentStatement();
+        editor.selection = this.getStatement(prev);
         editor.revealRange(editor.selection);
         let statement = doc.getText(editor.selection).trim();
         if (!this.terminal) {
             this.terminal = vscode.window.createTerminal('Tuareg-master');
+            let dirname = doc.fileName.split('\\');
+            dirname.pop();
+            this.terminal.sendText('cd "' + dirname.join('\\') + '"');
             this.terminal.sendText('ocaml');
         }
         this.terminal.show(true);
@@ -87,7 +111,7 @@ class Tuareg {
     }
     indentSelection(editor, sel) {
         if (!sel) {
-            sel = this.getCurrentStatement();
+            sel = this.getStatement();
         }
         let doc = editor.document;
         let indent = 0;

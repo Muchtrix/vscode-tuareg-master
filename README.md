@@ -18,13 +18,18 @@ Cursor then moves to beginning of the next one.
 
 Plug-in adds following shortcuts by default:
 * **ctrl+k ctrl+o** - open OCaml in integrated terminal
-* **right alt+/** (**Ctrl+alt+/** on mac) - send statement the cursor is on to ocaml
+* **right alt+/** (**Ctrl+alt+/** on mac) - send statement the cursor is on to ocaml interactive
+* **right alt+\\** (**Ctrl+alt+\\** on mac) - send previous statement to ocaml interactive
 
 ## Known Issues
 
 The extension doesn't respect comments, it will send commented-out code.
 
 ## Release Notes
+
+### 1.0.3
+
+Added shortcut to send previous statement and fixed shortcuts description on mac.
 
 ### 1.0.2
 

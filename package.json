@@ -2,7 +2,7 @@
     "name": "ocaml-tuareg-master",
     "displayName": "Ocaml tuareg-master",
     "description": "A quick extension to send single OCaml statement (finished with ;;) to opened console",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "publisher": "muchtrix",
     "author": {
         "name": "Wiktor Adamski",
@@ -38,6 +38,10 @@
             "title": "Tuareg: Send statement to terminal"
         },
         {
+            "command": "tuareg.sendPreviousLine",
+            "title": "Tuareg: Send previous statement to terminal"
+        },
+        {
             "command": "tuareg.toggleTerminal",
             "title": "Tuareg: Toggle OCaml in integrated console"
         },
@@ -49,6 +53,10 @@
             {
                 "command": "tuareg.sendLine",
                 "key": "ctrl+alt+/"
+            },
+            {
+                "command": "tuareg.sendPreviousLine",
+                "key": "ctrl+alt+\\"
             },
             {
                 "command": "tuareg.toggleTerminal",
